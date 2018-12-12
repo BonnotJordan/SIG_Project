@@ -2,13 +2,13 @@ package com.example.jordan.sig_project
 
 class Node {
 
-    private var distanceFromSource: Int = Int.MAX_VALUE
+    private var distanceFromSource: Float = Float.MAX_VALUE
     private var visited: Boolean = false
     private var edges: ArrayList<Edge> = ArrayList()
 
-    fun getDistanceFromSource(): Int { return distanceFromSource }
+    fun getDistanceFromSource(): Float { return distanceFromSource }
 
-    fun setDistanceFromSource(distanceFromSource: Int) {
+    fun setDistanceFromSource(distanceFromSource: Float) {
         this.distanceFromSource = distanceFromSource
     }
 

@@ -1,27 +1,18 @@
 package com.example.jordan.sig_project
 
-class Edge {
-    private var fromNodeIndex: Int = 0
-    private var toNodeIndex: Int = 0
-    private var length : Int = 0
-
-    constructor(fromNodeIndex: Int, toNodeIndex: Int, length: Int) {
-        this.fromNodeIndex = fromNodeIndex
-        this.toNodeIndex = toNodeIndex
-        this.length = length
-    }
+class Edge(private var fromNodeIndex: Int, private var toNodeIndex: Int, private var length: Float) {
 
     fun getFromNodeIndex(): Int { return fromNodeIndex }
 
     fun getToNodeIndex(): Int { return toNodeIndex }
 
-    fun getLength(): Int { return length}
+    fun getLength(): Float { return length}
 
     fun getNeighbourIndex(nodeIndex: Int): Int{
-        if(this.fromNodeIndex == nodeIndex){
-            return this.toNodeIndex
+        return if(this.fromNodeIndex == nodeIndex){
+            this.toNodeIndex
         } else {
-            return this.fromNodeIndex
+            this.fromNodeIndex
         }
     }
 }

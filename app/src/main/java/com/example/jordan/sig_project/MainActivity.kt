@@ -24,6 +24,13 @@ class MainActivity : AppCompatActivity() {
             uiThread {
                 Log.d("TAG_GET_DATA", data.toString())
                 Log.d("TAG_GET_DATA", dataArc.toString())
+                var edges: ArrayList<Edge> = ArrayList()
+                for (arc in dataArc) {
+                    edges.add(Edge(arc.arcDeb, arc.arcFin, arc.arcDistance))
+                }
+                var graph: Graph = Graph(edges)
+                graph.calculateShortestDistances()
+                graph.printResult()
             }
             //var result = data[1].busStopLatitude.toString()
         }
