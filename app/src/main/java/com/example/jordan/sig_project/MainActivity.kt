@@ -16,15 +16,14 @@ class MainActivity : AppCompatActivity() {
         val db = RoomAsset.databaseBuilder(
             this,
             AppDatabase::class.java,
-            "lp_iem_sig.sqlite"
+            "lp_iem_sig.db"
         ).build()
         doAsync {
-            Log.d("TAG_GET", "before")
             var data = db.busStopDao().points
-            Log.d("TAG_GET", "first")
+            var dataArc = db.busStopDao().arcs
             uiThread {
-                Log.d("TAG_GET", "test")
                 Log.d("TAG_GET_DATA", data.toString())
+                Log.d("TAG_GET_DATA", dataArc.toString())
             }
             //var result = data[1].busStopLatitude.toString()
         }
