@@ -15,5 +15,14 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
+    <Button
+            android:text="Show Map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="showMap"
+            android:id="@+id/showMap" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.872"/>
 
 </android.support.constraint.ConstraintLayout>

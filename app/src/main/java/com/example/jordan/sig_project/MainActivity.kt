@@ -1,8 +1,10 @@
 package com.example.jordan.sig_project
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import com.huma.room_for_asset.RoomAsset
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -27,5 +29,10 @@ class MainActivity : AppCompatActivity() {
             }
             //var result = data[1].busStopLatitude.toString()
         }
+    }
+
+    fun showMap(view: View){
+        var intent: Intent = Intent(this@MainActivity,MapsActivity::class.java)
+        startActivity(intent)
     }
 }
