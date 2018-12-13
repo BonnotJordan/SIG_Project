@@ -2,17 +2,14 @@ package com.example.jordan.sig_project
 
 import android.graphics.Color
 import android.os.Build
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.annotation.RequiresApi
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
-
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.gms.maps.model.*
 import com.huma.room_for_asset.RoomAsset
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -63,42 +60,64 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        for(i in 0..((data.size)-1)){
+
+        for (i in 0..((data.size) - 1)) {
             val busStop = LatLng(data[i].latitude.toDouble(), data[i].longitude.toDouble())
-            mMap.addMarker(MarkerOptions().position(busStop).title("Marker in bus stop : " + data[i].name + " and id = "+data[i].pointId))
+            var marker: Marker =  mMap.addMarker(MarkerOptions().position(busStop).title("Sélectionner l'arrêt : " + data[i].name))
         }
 
 
-        for(j in 0..((dataPointDebut.size)-1)){
-            var pointDeb = LatLng(dataPointDebut[j].latitude.toDouble(),dataPointDebut[j].longitude.toDouble())
-            var pointFin = LatLng(datapointFin[j].latitude.toDouble(),datapointFin[j].longitude.toDouble())
-            var line: PolylineOptions = PolylineOptions().add(pointDeb,pointFin)
-            if(dataPointDebut[j].partition == 1){
+        for (j in 0..((dataPointDebut.size) - 1)) {
+            var pointDeb = LatLng(dataPointDebut[j].latitude.toDouble(), dataPointDebut[j].longitude.toDouble())
+            var pointFin = LatLng(datapointFin[j].latitude.toDouble(), datapointFin[j].longitude.toDouble())
+            var line: PolylineOptions = PolylineOptions().add(pointDeb, pointFin)
+            if (dataPointDebut[j].partition == 1) {
                 line.color(Color.BLUE)
             }
-            if(dataPointDebut[j].partition == 2){
+            if (dataPointDebut[j].partition == 2) {
                 line.color(Color.RED)
             }
-            if(dataPointDebut[j].partition == 3){
+            if (dataPointDebut[j].partition == 3) {
                 line.color(Color.YELLOW)
             }
-            if(dataPointDebut[j].partition == 4){
+            if (dataPointDebut[j].partition == 4) {
                 line.color(Color.GREEN)
             }
-            if(dataPointDebut[j].partition == 5){
+            if (dataPointDebut[j].partition == 5) {
                 line.color(Color.CYAN)
             }
-            if(dataPointDebut[j].partition == 6){
+            if (dataPointDebut[j].partition == 6) {
                 line.color(Color.MAGENTA)
             }
-            if(dataPointDebut[j].partition == 7){
+            if (dataPointDebut[j].partition == 7) {
                 line.color(Color.GRAY)
             }
-            if(dataPointDebut[j].partition == 21){
+            if (dataPointDebut[j].partition == 21) {
                 line.color(Color.BLACK)
             }
 
+
+
             mMap.addPolyline(line)
         }
+
+        mMap.setOnInfoWindowClickListener {
+            var string = ""
+            if(it.title.startsWith("Sélectionner",true)){
+
+                it.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                it.title = ("Déselectionner l'arrêt")
+            } else {
+                it.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+                it.title = ("Sélectionner l'arrêt: " + string)
+            }
+        }
+
+
+
+
     }
+
+
+
 }
