@@ -11,7 +11,14 @@ interface BusStopDao {
     @get:Query("SELECT * FROM GEO_ARC")
     val arcs: List<GeoArc>
 
+    @get:Query("SELECT * FROM GEO_POINT JOIN GEO_ARC WHERE GEO_ARC_DEB = GEO_POI_ID")
+    val pointArcDeb: List<GeoPoint>
+
+    @get:Query("SELECT * FROM GEO_POINT JOIN GEO_ARC WHERE GEO_ARC_FIN = GEO_POI_ID")
+    val pointArcFin: List<GeoPoint>
+
 }
+
 
 @Entity(tableName = "GEO_POINT")
 data class GeoPoint(

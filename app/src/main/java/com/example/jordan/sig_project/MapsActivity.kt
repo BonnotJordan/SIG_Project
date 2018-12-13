@@ -1,15 +1,16 @@
 package com.example.jordan.sig_project
 
+import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.PolylineOptions
 import com.huma.room_for_asset.RoomAsset
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
@@ -17,6 +18,8 @@ import org.jetbrains.anko.uiThread
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     lateinit var data: List<GeoPoint>
     lateinit var dataArc: List<GeoArc>
+    lateinit var dataPointDebut: List<GeoPoint>
+    lateinit var datapointFin: List<GeoPoint>
     private lateinit var mMap: GoogleMap
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +38,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         doAsync {
             data = db.busStopDao().points
             dataArc = db.busStopDao().arcs
+            dataPointDebut = db.busStopDao().pointArcDeb
+            datapointFin = db.busStopDao().pointArcFin
             uiThread {
                 Log.d("TAG_GET_DATA", data.toString())
                 Log.d("TAG_GET_DATA", dataArc.toString())
@@ -56,8 +61,27 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
 
         for(i in 0..((data.size)-1)){
-            val sydney = LatLng(data[i].latitude.toDouble(), data[i].longitude.toDouble())
-            mMap.addMarker(MarkerOptions().position(sydney).title("Marker in bus stop : " + data[i].name))
+            val busStop = LatLng(data[i].latitude.toDouble(), data[i].longitude.toDouble())
+            mMap.addMarker(MarkerOptions().position(busStop).title("Marker in bus stop : " + data[i].name))
+        }
+
+
+        for(j in 0..((dataPointDebut.size)-1)){
+            var pointDeb = LatLng(dataPointDebut[j].latitude.toDouble(),dataPointDebut[j].longitude.toDouble())
+            var pointFin = LatLng(datapointFin[j].latitude.toDouble(),datapointFin[j].longitude.toDouble())
+            var line: PolylineOptions = PolylineOptions().add(pointDeb,pointFin)
+            when {
+                dataPointDebut[j].partition == 1 -> line.color(R.color.blue)
+                dataPointDebut[j].partition == 2 -> line.color(R.color.red)
+                dataPointDebut[j].partition == 3 -> line.color(R.color.yellow)
+                dataPointDebut[j].partition == 4 -> line.color(R.color.green)
+                dataPointDebut[j].partition == 5 -> line.color(R.color.cyan)
+                dataPointDebut[j].partition == 6 -> line.color(R.color.purple)
+                dataPointDebut[j].partition == 7 -> line.color(R.color.orange)
+                dataPointDebut[j].partition == 21 -> line.color(R.color.lightGreen)
+                dataPointDebut[j].partition == 0 -> line.color(Color.BLACK)
+            }
+            mMap.addPolyline(line)
         }
     }
 }
