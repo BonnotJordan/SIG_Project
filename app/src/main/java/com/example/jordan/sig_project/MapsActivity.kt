@@ -62,7 +62,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         for(i in 0..((data.size)-1)){
             val busStop = LatLng(data[i].latitude.toDouble(), data[i].longitude.toDouble())
-            mMap.addMarker(MarkerOptions().position(busStop).title("Marker in bus stop : " + data[i].name))
+            mMap.addMarker(MarkerOptions().position(busStop).title("Marker in bus stop : " + data[i].name + " and id = "+data[i].pointId))
         }
 
 
@@ -70,16 +70,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             var pointDeb = LatLng(dataPointDebut[j].latitude.toDouble(),dataPointDebut[j].longitude.toDouble())
             var pointFin = LatLng(datapointFin[j].latitude.toDouble(),datapointFin[j].longitude.toDouble())
             var line: PolylineOptions = PolylineOptions().add(pointDeb,pointFin)
-            when {
-                dataPointDebut[j].partition == 1 -> line.color(R.color.blue)
-                dataPointDebut[j].partition == 2 -> line.color(R.color.red)
-                dataPointDebut[j].partition == 3 -> line.color(R.color.yellow)
-                dataPointDebut[j].partition == 4 -> line.color(R.color.green)
-                dataPointDebut[j].partition == 5 -> line.color(R.color.cyan)
-                dataPointDebut[j].partition == 6 -> line.color(R.color.purple)
-                dataPointDebut[j].partition == 7 -> line.color(R.color.orange)
-                dataPointDebut[j].partition == 21 -> line.color(R.color.lightGreen)
-                dataPointDebut[j].partition == 0 -> line.color(Color.BLACK)
+            if(dataPointDebut[j].partition == 2){
+                line.color(Color.RED)
             }
             mMap.addPolyline(line)
         }
