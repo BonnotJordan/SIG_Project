@@ -5,12 +5,15 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.example.jordan.sig_project.otherdijkstra.DijkstraAlgorithm
 import com.example.jordan.sig_project.otherdijkstra.Edge
 import com.example.jordan.sig_project.otherdijkstra.Graph
 import com.example.jordan.sig_project.otherdijkstra.Vertex
 import com.huma.room_for_asset.RoomAsset
+import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.uiThread
 import java.io.File
 import java.nio.charset.Charset
@@ -49,15 +52,17 @@ class MainActivity : AppCompatActivity() {
 
                 var graph = Graph(nodes, edges)
                 var dijkstraAlgorithm = DijkstraAlgorithm(graph)
-                var path = dijkstraAlgorithm.getResult(nodes.find { geoPoint -> geoPoint.pointId == 1 }!!, nodes.find { geoPoint -> geoPoint.pointId == 81 }!!)
-                var kml = KMLFormatter().header
-                kml += KMLFormatter().getOutput(path!!)
-                kml += KMLFormatter().footer
-                Log.d("KML", kml)
+                buttonDijkstra.onClick {
+                    if (idDebut.text.isNotEmpty() && idFin.text.isNotEmpty()) {
+                        var path = dijkstraAlgorithm.getResult(nodes.find { geoPoint -> geoPoint.pointId == idDebut.text.toString().toInt() }!!, nodes.find { geoPoint -> geoPoint.pointId == idFin.text.toString().toInt() }!!)
+                        var kml = KMLFormatter().header
+                        kml += KMLFormatter().getOutput(path!!)
+                        kml += KMLFormatter().footer
+                        File(filesDir.toString() + "/myfile.kml").writeText(kml, Charset.defaultCharset())
+                        Toast.makeText(this@MainActivity, "KML généré", Toast.LENGTH_LONG).show()
+                    }
 
-                File(filesDir.toString() + "/myfile.kml").writeText(kml, Charset.defaultCharset())
-
-                Log.d("kml", "finish")
+                }
             }
             //var result = data[1].busStopLatitude.toString()
         }
