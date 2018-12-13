@@ -1,8 +1,10 @@
 package com.example.jordan.sig_project
 
 import android.graphics.Color
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.util.Log
 
 import com.google.android.gms.maps.GoogleMap
@@ -57,6 +59,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
@@ -70,9 +73,31 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             var pointDeb = LatLng(dataPointDebut[j].latitude.toDouble(),dataPointDebut[j].longitude.toDouble())
             var pointFin = LatLng(datapointFin[j].latitude.toDouble(),datapointFin[j].longitude.toDouble())
             var line: PolylineOptions = PolylineOptions().add(pointDeb,pointFin)
+            if(dataPointDebut[j].partition == 1){
+                line.color(Color.BLUE)
+            }
             if(dataPointDebut[j].partition == 2){
                 line.color(Color.RED)
             }
+            if(dataPointDebut[j].partition == 3){
+                line.color(Color.YELLOW)
+            }
+            if(dataPointDebut[j].partition == 4){
+                line.color(Color.GREEN)
+            }
+            if(dataPointDebut[j].partition == 5){
+                line.color(Color.CYAN)
+            }
+            if(dataPointDebut[j].partition == 6){
+                line.color(Color.MAGENTA)
+            }
+            if(dataPointDebut[j].partition == 7){
+                line.color(Color.GRAY)
+            }
+            if(dataPointDebut[j].partition == 21){
+                line.color(Color.BLACK)
+            }
+
             mMap.addPolyline(line)
         }
     }
