@@ -5,8 +5,8 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import com.example.jordan.sig_project.otherdijkstra.DijkstraAlgorithm
-import com.example.jordan.sig_project.otherdijkstra.Graph
+import com.example.jordan.sig_project.dijkstra.DijkstraAlgorithm
+import com.example.jordan.sig_project.dijkstra.Graph
 import com.huma.room_for_asset.RoomAsset
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
