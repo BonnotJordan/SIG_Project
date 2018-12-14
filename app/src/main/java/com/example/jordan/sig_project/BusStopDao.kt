@@ -36,5 +36,5 @@ data class GeoArc(
     @ColumnInfo(name = "GEO_ARC_FIN") var arcFin: Int = 0,
     @ColumnInfo(name = "GEO_ARC_TEMPS") var arcTemps: Float = 0f,
     @ColumnInfo(name = "GEO_ARC_DISTANCE") var arcDistance: Float = 0f,
-    @ColumnInfo(name = "GEO_ARC_SENS") var ardSens: Int = 0
+    @ColumnInfo(name = "GEO_ARC_SENS") var arcSens: Int = 0
 )

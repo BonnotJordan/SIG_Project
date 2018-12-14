@@ -3,13 +3,10 @@ package com.example.jordan.sig_project
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.example.jordan.sig_project.otherdijkstra.DijkstraAlgorithm
-import com.example.jordan.sig_project.otherdijkstra.Edge
 import com.example.jordan.sig_project.otherdijkstra.Graph
-import com.example.jordan.sig_project.otherdijkstra.Vertex
 import com.huma.room_for_asset.RoomAsset
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.doAsync
@@ -17,7 +14,7 @@ import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.uiThread
 import java.io.File
 import java.nio.charset.Charset
-import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
@@ -49,15 +46,21 @@ class MainActivity : AppCompatActivity() {
                 nodes.addAll(data)
                 edges.addAll(dataArc)
 
+                var edgesBis: ArrayList<GeoArc> = ArrayList()
+
+                edges.forEach{
+                    var arc = GeoArc(0, it.arcFin, it.arcDeb, it.arcTemps, it.arcDistance, it.arcSens)
+                    edgesBis.add(arc)
+                }
+
+                edges.addAll(edgesBis)
+
 
                 var graph = Graph(nodes, edges)
                 var dijkstraAlgorithm = DijkstraAlgorithm(graph)
                 buttonDijkstra.onClick {
                     if (idDebut.text.isNotEmpty() && idFin.text.isNotEmpty()) {
                         var path = dijkstraAlgorithm.getResult(nodes.find { geoPoint -> geoPoint.pointId == idDebut.text.toString().toInt() }!!, nodes.find { geoPoint -> geoPoint.pointId == idFin.text.toString().toInt() }!!)
-                        if (path.isNullOrEmpty()) {
-                            path = dijkstraAlgorithm.getResult(nodes.find { geoPoint -> geoPoint.pointId == idFin.text.toString().toInt() }!!, nodes.find { geoPoint -> geoPoint.pointId == idDebut.text.toString().toInt() }!!)
-                        }
                         path?.let {
                             var kml = KMLFormatter().header
                             kml += KMLFormatter().getOutput(it)
