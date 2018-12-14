@@ -1,4 +1,4 @@
-package com.example.jordan.sig_project.otherdijkstra
+package com.example.jordan.sig_project.dijkstra
 
 class Vertex(val id: String, var name: String) {
 

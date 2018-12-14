@@ -1,4 +1,4 @@
-package com.example.jordan.sig_project.otherdijkstra
+package com.example.jordan.sig_project.dijkstra
 
 import com.example.jordan.sig_project.GeoArc
 import com.example.jordan.sig_project.GeoPoint
