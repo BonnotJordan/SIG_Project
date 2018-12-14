@@ -3,6 +3,7 @@ package com.example.jordan.sig_project.otherdijkstra
 import android.util.Log
 import com.example.jordan.sig_project.GeoArc
 import com.example.jordan.sig_project.GeoPoint
+import java.lang.Math.*
 import java.util.*
 
 class DijkstraAlgorithm(graph: Graph) {
