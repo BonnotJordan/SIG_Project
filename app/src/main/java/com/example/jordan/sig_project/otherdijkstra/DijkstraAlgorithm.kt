@@ -106,4 +106,34 @@ class DijkstraAlgorithm(graph: Graph) {
         return d ?: Float.MAX_VALUE
     }
 
+    private fun convertDegToLamb(lat: Double, lon: Double): List<Double> {
+        val lamb: ArrayList<Double> = ArrayList()
+        val n = 0.7289686274
+        val C = 11745793.39
+        val e = 0.08248325676
+        val Xs = 600000.0
+        val Ys = 8199695.768
+
+        var GAMMA0 = (3600 * 2).toDouble() + (60 * 20).toDouble() + 14.025
+        GAMMA0 = GAMMA0 / (180 * 3600) * Math.PI
+        val lati = lat / 180 * Math.PI
+        val longi = lon / 180 * Math.PI
+        val L = 0.5 * log((1 + sin(lati)) / (1 - sin(lati))) - e / 2 * log((1 + e * sin(lati)) / (1 - e * sin(lati)))
+        val R = C * Math.exp(-n * L)
+        val GAMMA = n * (longi - GAMMA0)
+
+        val Lx = Xs + R * sin(GAMMA)
+        val Ly = Ys - R * cos(GAMMA)
+
+        lamb.add(Lx)
+        lamb.add(Ly)
+
+        return lamb
+    }
+
+    fun distancePoint(xa: Double, ya: Double, xb: Double, yb: Double): Double {
+
+        return Math.sqrt(Math.pow(xb - xa, 2.0) + Math.pow(yb - ya, 2.0))
+    }
+
 }
