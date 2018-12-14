@@ -55,13 +55,20 @@ class MainActivity : AppCompatActivity() {
                 buttonDijkstra.onClick {
                     if (idDebut.text.isNotEmpty() && idFin.text.isNotEmpty()) {
                         var path = dijkstraAlgorithm.getResult(nodes.find { geoPoint -> geoPoint.pointId == idDebut.text.toString().toInt() }!!, nodes.find { geoPoint -> geoPoint.pointId == idFin.text.toString().toInt() }!!)
-                        var kml = KMLFormatter().header
-                        kml += KMLFormatter().getOutput(path!!)
-                        kml += KMLFormatter().footer
-                        File(filesDir.toString() + "/myfile.kml").writeText(kml, Charset.defaultCharset())
-                        Toast.makeText(this@MainActivity, "KML généré", Toast.LENGTH_LONG).show()
+                        if (path.isNullOrEmpty()) {
+                            path = dijkstraAlgorithm.getResult(nodes.find { geoPoint -> geoPoint.pointId == idFin.text.toString().toInt() }!!, nodes.find { geoPoint -> geoPoint.pointId == idDebut.text.toString().toInt() }!!)
+                        }
+                        path?.let {
+                            var kml = KMLFormatter().header
+                            kml += KMLFormatter().getOutput(it)
+                            kml += KMLFormatter().footer
+                            File(filesDir.toString() + "/myfile.kml").writeText(kml, Charset.defaultCharset())
+                            Toast.makeText(this@MainActivity, "KML généré", Toast.LENGTH_LONG).show()
+                        }
+                        if (path.isNullOrEmpty()) {
+                            Toast.makeText(this@MainActivity, "Aucun chemin trouvé", Toast.LENGTH_LONG).show()
+                        }
                     }
-
                 }
             }
             //var result = data[1].busStopLatitude.toString()
